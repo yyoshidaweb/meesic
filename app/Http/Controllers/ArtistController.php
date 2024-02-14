@@ -5,15 +5,17 @@ namespace App\Http\Controllers;
 use App\Models\Artist;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Illuminate\View\View;
 
 class ArtistController extends Controller
 {
     /**
      * Display a listing of the resource.
+     * アーティスト一覧を表示する
      */
-    public function index(): Response
+    public function index(): View
     {
-        return response('Hello World!');
+        return view('artists.index');
     }
 
     /**
