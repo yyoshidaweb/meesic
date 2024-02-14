@@ -15,6 +15,10 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    {{-- アーティスト追加ページへのリンク --}}
+                    <x-nav-link :href="route('artists.index')" :active="request()->routeIs('artists.index')">
+                        アーティストを追加
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -69,6 +73,10 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
+            </x-responsive-nav-link>
+            {{-- モバイル向けアーティスト追加ページへのリンク --}}
+            <x-responsive-nav-link :href="route('artists.index')" :active="request()->routeIs('artists.index')">
+                アーティストを追加
             </x-responsive-nav-link>
         </div>
 
