@@ -32,9 +32,9 @@ class ArtistController extends Controller
      */
     public function store(Request $request): RedirectResponse
     {
-        // 文字列で100文字以内という制限
+        // バリデーション
         $validated = $request->validate([
-            'message' => 'required | string | max:100',
+            'artist.name' => 'required | string | max:100',
         ]);
 
         // アーティスト名を追加して、ホームにリダイレクトする
