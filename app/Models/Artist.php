@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Artist extends Model
 {
     use HasFactory;
+
+    // 一括割り当ての有効化
+    protected $fillable = [
+        'artist.name',
+    ];
 }
