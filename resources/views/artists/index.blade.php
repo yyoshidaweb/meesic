@@ -10,13 +10,13 @@
                 アーティスト名
                 <input
                     type="text"
-                    name="artist[name]"
+                    name="name"
                     placeholder="アーティスト名を入力してください"
-                    value="{{ old('artist.name') }}"
+                    value="{{ old('name') }}"
                     class=""
                 />
                 {{-- エラーメッセージを表示する --}}
-                <x-input-error :messages="$errors->get('artist.name')" class="" />
+                <x-input-error :messages="$errors->get('name')" class="" />
                 {{-- 送信ボタン --}}
                 <x-primary-button class="">アーティストを追加</x-primary-button>
             </label>

@@ -34,7 +34,7 @@ class ArtistController extends Controller
     {
         // バリデーション
         $validated = $request->validate([
-            'artist.name' => 'required | string | max:100',
+            'name' => 'required | string | max:100',
         ]);
 
         // アーティスト名を追加して、ホームにリダイレクトする
