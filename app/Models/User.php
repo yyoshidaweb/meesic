@@ -44,7 +44,7 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    // userとartistのリレーション
+    // UserからArtistへのリレーション
     public function artists(): HasMany
     {
         return $this->hasMany(Artist::class);
