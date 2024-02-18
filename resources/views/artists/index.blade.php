@@ -28,6 +28,14 @@
                 <div class="">
                     <p class="">{{ $artist->name }}</p>
                 </div>
+                {{-- もし削除権限がある場合に表示する --}}
+                @if ($artist->user->is(auth()->user()))
+                    <form method="POST" action="{{ route('artists.destroy', $artist) }}">
+                        @csrf
+                        @method('delete')
+                        <button type="submit" class="" onclick="return confirm('本当に削除しますか？')">削除</button>
+                    </form>
+                @endif
             @endforeach
         </div>
     </div>
