@@ -21,5 +21,14 @@
                 <x-primary-button class="">アーティストを追加</x-primary-button>
             </label>
         </form>
+
+        {{-- アーティスト一覧を表示 --}}
+        <div class="">
+            @foreach ($artists as $artist)
+                <div class="">
+                    <p class="">{{ $artist->name }}</p>
+                </div>
+            @endforeach
+        </div>
     </div>
 </x-app-layout>
