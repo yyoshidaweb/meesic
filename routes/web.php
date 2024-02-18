@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ArtistController; //アーティストコントローラー
 
 /*
 |--------------------------------------------------------------------------
@@ -28,4 +29,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+/**
+ * CRUD機能を有効化する
+ */
+Route::resource('artists', ArtistController::class)
+    //表示、保存機能を有効化
+    ->only(['index', 'store'])
+    //ログイン認証、メール認証を有効化
+    ->middleware(['auth', 'verified']);
+
+require __DIR__ . '/auth.php';
