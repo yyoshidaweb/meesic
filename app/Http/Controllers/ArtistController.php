@@ -70,9 +70,12 @@ class ArtistController extends Controller
 
     /**
      * Remove the specified resource from storage.
+     * アーティスト名を削除する
      */
-    public function destroy(Artist $artist)
+    public function destroy(Artist $artist): RedirectResponse
     {
-        //
+        $this->authorize('delete', $artist);
+        $artist->delete();
+        return redirect(route('artists.index'));
     }
 }

@@ -33,8 +33,8 @@ Route::middleware('auth')->group(function () {
  * CRUD機能を有効化する
  */
 Route::resource('artists', ArtistController::class)
-    //表示、保存機能を有効化
-    ->only(['index', 'store'])
+    //表示、保存、削除、機能を有効化
+    ->only(['index', 'store', 'destroy'])
     //ログイン認証、メール認証を有効化
     ->middleware(['auth', 'verified']);
 
