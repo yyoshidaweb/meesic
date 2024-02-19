@@ -37,6 +37,8 @@
                     </form>
                 @endif
             @endforeach
+            {{-- ページネーション --}}
+            {{ $artists->links() }}
         </div>
     </div>
 </x-app-layout>
