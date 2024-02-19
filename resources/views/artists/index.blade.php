@@ -37,6 +37,8 @@
                     </form>
                 @endif
             @endforeach
+            {{-- ページネーション --}}
+            <div class="paginate">{{ $artists->links() }}</div>
         </div>
     </div>
 </x-app-layout>

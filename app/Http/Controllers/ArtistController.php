@@ -16,7 +16,7 @@ class ArtistController extends Controller
     public function index(): View
     {
         return view('artists.index', [
-            'artists' => Artist::with('user')->latest()->get(),
+            'artists' => Artist::with('user')->latest()->paginate(20),
         ]);
     }
 
