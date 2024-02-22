@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Artist;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ArtistController extends Controller
@@ -48,8 +49,10 @@ class ArtistController extends Controller
      */
     public function edit(Artist $artist): View
     {
+        $user = Auth::user();
+
         return view('artists.edit', [
-            'artists' => Artist::with('user')->latest()->paginate(20),
+            'artists' => Artist::where('user_id', $user->id)->latest()->paginate(20),
         ]);
     }
 
