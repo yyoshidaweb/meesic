@@ -11,6 +11,7 @@ class ArtistController extends Controller
 {
     /**
      * アーティストリストを表示する
+     * (URLで指定されたユーザーのリストを表示)
      *
      * @return View
      */
@@ -40,6 +41,7 @@ class ArtistController extends Controller
 
     /**
      * アーティストリスト編集ページを表示する
+     * (ログイン中のユーザーのリストを表示)
      *
      * @param Artist $artist
      * @return View
