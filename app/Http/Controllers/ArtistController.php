@@ -10,8 +10,9 @@ use Illuminate\View\View;
 class ArtistController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * アーティスト一覧を表示する
+     * アーティストリストを表示する
+     *
+     * @return View
      */
     public function index(): View
     {
@@ -21,16 +22,10 @@ class ArtistController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
      * アーティスト名を追加する
+     *
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
@@ -45,32 +40,23 @@ class ArtistController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * アーティストリスト編集ページを表示する
+     *
+     * @param Artist $artist
+     * @return View
      */
-    public function show(Artist $artist)
+    public function edit(Artist $artist): View
     {
-        //
+        return view('artists.edit', [
+            'artists' => Artist::with('user')->latest()->paginate(20),
+        ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Artist $artist)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Artist $artist)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
      * アーティスト名を削除する
+     *
+     * @param Artist $artist
+     * @return RedirectResponse
      */
     public function destroy(Artist $artist): RedirectResponse
     {
