@@ -33,7 +33,6 @@ class ArtistController extends Controller
         $validated = $request->validate([
             'name' => 'required | string | max:100',
         ]);
-
         // アーティスト名を追加して、ホームにリダイレクトする
         $request->user()->artists()->create($validated);
         return redirect(route('artists.index'));
