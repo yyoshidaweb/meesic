@@ -47,11 +47,11 @@ class ArtistController extends Controller
      * @param Artist $artist
      * @return View
      */
-    public function edit(Artist $artist): View
+    public function editArtists(Artist $artist): View
     {
         $user = Auth::user();
 
-        return view('artists.edit', [
+        return view('artists.editArtists', [
             'artists' => Artist::where('user_id', $user->id)->latest()->paginate(20),
         ]);
     }
