@@ -30,12 +30,17 @@ Route::middleware('auth')->group(function () {
 });
 
 /**
- * CRUD機能を有効化する
+ * ArtistControllerのルーティンググループ
  */
-Route::resource('artists', ArtistController::class)
-    //表示、保存、削除、機能を有効化
-    ->only(['index', 'store', 'destroy'])
-    //ログイン認証、メール認証を有効化
-    ->middleware(['auth', 'verified']);
+// 未ログインユーザー用
+Route::controller(ArtistController::class)->group(function () {
+    Route::get('/artists', 'index')->name('artists.index');
+});
+
+// 認証済ユーザー用
+Route::controller(ArtistController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::post('/artists', 'store')->name('artists.store');
+    Route::delete('/artists/{artist}', 'destroy')->name('artists.destroy');
+});
 
 require __DIR__ . '/auth.php';
