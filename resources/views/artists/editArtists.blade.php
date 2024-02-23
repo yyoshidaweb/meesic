@@ -34,7 +34,11 @@
                 <form method="POST" action="{{ route('artists.destroy', $artist) }}">
                     @csrf
                     @method('delete')
-                    <button type="submit" class="" onclick="return confirm('本当に削除しますか？')">削除</button>
+                    <x-primary-button
+                        type="submit"
+                        class="bg-red-500"
+                        onclick="return confirm('本当に削除しますか？')"
+                    >削除</x-primary-button>
                 </form>
             @endif
         @endforeach
