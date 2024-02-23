@@ -21,24 +21,24 @@
                 <x-primary-button class="">アーティストを追加</x-primary-button>
             </label>
         </form>
+    </div>
 
-        {{-- アーティスト一覧を表示 --}}
-        <div class="">
-            @foreach ($artists as $artist)
-                <div class="">
-                    <p class="">{{ $artist->name }}</p>
-                </div>
-                {{-- もし削除権限がある場合に表示する --}}
-                @if ($artist->user->is(auth()->user()))
-                    <form method="POST" action="{{ route('artists.destroy', $artist) }}">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="" onclick="return confirm('本当に削除しますか？')">削除</button>
-                    </form>
-                @endif
-            @endforeach
-            {{-- ページネーション --}}
-            <div class="paginate">{{ $artists->links() }}</div>
-        </div>
+    {{-- アーティスト一覧を表示 --}}
+    <div class="">
+        @foreach ($artists as $artist)
+            <div class="">
+                <p class="">{{ $artist->name }}</p>
+            </div>
+            {{-- もし削除権限がある場合に表示する --}}
+            @if ($artist->user->is(auth()->user()))
+                <form method="POST" action="{{ route('artists.destroy', $artist) }}">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="" onclick="return confirm('本当に削除しますか？')">削除</button>
+                </form>
+            @endif
+        @endforeach
+        {{-- ページネーション --}}
+        <div class="paginate">{{ $artists->links() }}</div>
     </div>
 </x-app-layout>
