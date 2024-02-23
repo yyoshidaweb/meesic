@@ -39,7 +39,7 @@ Route::controller(ArtistController::class)->group(function () {
     Route::get('/artists', 'index')->name('artists.index');
 });
 
-// 認証済ユーザー用
+// ログイン済ユーザー用
 Route::controller(ArtistController::class)->middleware(['auth', 'verified'])->group(function () {
     // アーティストリスト編集画面を表示する
     Route::get('/artists/edit-artists', 'editArtists')->name('artists.editArtists');
