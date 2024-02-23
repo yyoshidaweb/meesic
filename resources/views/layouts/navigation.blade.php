@@ -15,9 +15,13 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    {{-- アーティスト追加ページへのリンク --}}
+                    {{-- アーティストリストへのリンク --}}
                     <x-nav-link :href="route('artists.index')" :active="request()->routeIs('artists.index')">
-                        アーティストを追加
+                        ホーム
+                    </x-nav-link>
+                    {{-- アーティストリスト編集ページへのリンク --}}
+                    <x-nav-link :href="route('artists.editArtists')" :active="request()->routeIs('artists.editArtists')">
+                        編集
                     </x-nav-link>
                 </div>
             </div>
