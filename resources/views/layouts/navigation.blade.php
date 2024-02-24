@@ -87,9 +87,13 @@
                 <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
-                {{-- モバイル向けアーティスト追加ページへのリンク --}}
+                {{-- モバイル向けアーティストリストページへのリンク --}}
                 <x-responsive-nav-link :href="route('artists.index')" :active="request()->routeIs('artists.index')">
-                    アーティストを追加
+                    ホーム
+                </x-responsive-nav-link>
+                {{-- アーティストリスト編集ページへのリンク --}}
+                <x-responsive-nav-link :href="route('artists.editArtists')" :active="request()->routeIs('artists.editArtists')">
+                    編集
                 </x-responsive-nav-link>
             </div>
 
