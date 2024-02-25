@@ -17,7 +17,7 @@
                             {{ __('Dashboard') }}
                         </x-nav-link>
                         {{-- アーティストリストへのリンク --}}
-                        <x-nav-link :href="'#'" :active="request()->routeIs('artists.index')">
+                        <x-nav-link :href="route('artists.index', ['url_name' => Auth::user()->url_name])" :active="request()->routeIs('artists.index')">
                             ホーム
                         </x-nav-link>
                         {{-- アーティストリスト編集ページへのリンク --}}
@@ -88,7 +88,7 @@
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
                 {{-- モバイル向けアーティストリストページへのリンク --}}
-                <x-responsive-nav-link :href="'#'" :active="request()->routeIs('artists.index')">
+                <x-responsive-nav-link :href="route('artists.index', ['url_name' => Auth::user()->url_name])" :active="request()->routeIs('artists.index')">
                     ホーム
                 </x-responsive-nav-link>
                 {{-- アーティストリスト編集ページへのリンク --}}
