@@ -33,12 +33,6 @@ Route::middleware('auth')->group(function () {
 /**
  * ArtistControllerのルーティンググループ
  */
-// 未ログインユーザー用
-Route::controller(ArtistController::class)->group(function () {
-    // アーティストリストを表示する
-    Route::get('/artists', 'index')->name('artists.index');
-});
-
 // ログイン済ユーザー用
 Route::controller(ArtistController::class)->middleware(['auth', 'verified'])->group(function () {
     // アーティストリスト編集画面を表示する
@@ -49,4 +43,11 @@ Route::controller(ArtistController::class)->middleware(['auth', 'verified'])->gr
     Route::delete('/artists/{artist}', 'destroy')->name('artists.destroy');
 });
 
+// auth.phpファイル内のルーティングを読み込む
 require __DIR__ . '/auth.php';
+
+// 未ログインユーザー用 (注意: 優先順位を最下位にするため最下部に記述する必要あり)
+Route::controller(ArtistController::class)->group(function () {
+    // アーティストリストを表示する
+    Route::get('/{url_name}', 'index')->name('artists.index');
+});

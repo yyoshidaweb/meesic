@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,10 +17,14 @@ class ArtistController extends Controller
      *
      * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
+        // リクエストされたパスとurl_nameが一致するユーザーを検索する
+        $user = User::where('url_name', $request->path())->first();
+
+        // リクエストされたurl_nameと紐づくユーザーのアーティストリストを表示する
         return view('artists.index', [
-            'artists' => Artist::with('user')->latest()->paginate(20),
+            'artists' => Artist::where('user_id', $user->id)->latest()->paginate(20),
         ]);
     }
 
