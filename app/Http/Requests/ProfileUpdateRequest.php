@@ -5,6 +5,7 @@ namespace App\Http\Requests;
 use App\Models\User;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 
 class ProfileUpdateRequest extends FormRequest
 {
@@ -18,7 +19,16 @@ class ProfileUpdateRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
-            'url_name' => ['required', 'string', 'lowercase', 'regex:/^[a-z0-9-]+$/', 'not_regex:/^-|-$/', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
+            'url_name' => [
+                'required',
+                'string',
+                'lowercase',
+                'regex:/^[a-z0-9-]+$/',
+                'not_regex:/^-|-$/',
+                'max:255',
+                Rule::unique(User::class)->ignore($this->user()->id),
+                Rule::notIn(array_column(Route::getRoutes()->getRoutes(), 'uri'))
+            ],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', Rule::unique(User::class)->ignore($this->user()->id)],
         ];
     }
