@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ArtistController; //アーティストコントローラー
+use Faker\Guesser\Name;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,15 +33,21 @@ Route::middleware('auth')->group(function () {
 /**
  * ArtistControllerのルーティンググループ
  */
-// 未ログインユーザー用
-Route::controller(ArtistController::class)->group(function () {
-    Route::get('/artists', 'index')->name('artists.index');
-});
-
-// 認証済ユーザー用
+// ログイン済ユーザー用
 Route::controller(ArtistController::class)->middleware(['auth', 'verified'])->group(function () {
+    // アーティストリスト編集画面を表示する
+    Route::get('/artists/edit-artists', 'editArtists')->name('artists.editArtists');
+    // アーティスト追加を実行する
     Route::post('/artists', 'store')->name('artists.store');
+    // アーティスト削除を実行する
     Route::delete('/artists/{artist}', 'destroy')->name('artists.destroy');
 });
 
+// auth.phpファイル内のルーティングを読み込む
 require __DIR__ . '/auth.php';
+
+// 未ログインユーザー用 (注意: 優先順位を最下位にするため最下部に記述する必要あり)
+Route::controller(ArtistController::class)->group(function () {
+    // アーティストリストを表示する
+    Route::get('/{url_name}', 'index')->name('artists.index');
+});

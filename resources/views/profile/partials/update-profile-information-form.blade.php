@@ -23,6 +23,16 @@
             <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
+        {{-- url_name用のユーザー名 --}}
+        <div>
+            <x-input-label for="url_name" :value="__('My Meesic URL')" />
+            <div class="flex items-center">
+                <p class="mr-1">https://meesic.me/</p>
+                <x-text-input id="url_name" name="url_name" type="text" class="block mt-1 w-full" :value="old('url_name', $user->url_name)" required autocomplete="name" />
+            </div>
+            <x-input-error :messages="$errors->get('url_name')" class="mt-2" />
+        </div>
+
         <div>
             <x-input-label for="email" :value="__('Email')" />
             <x-text-input id="email" name="email" type="email" class="mt-1 block w-full" :value="old('email', $user->email)" required autocomplete="username" />

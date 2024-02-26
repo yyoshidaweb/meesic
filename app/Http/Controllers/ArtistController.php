@@ -3,34 +3,36 @@
 namespace App\Http\Controllers;
 
 use App\Models\Artist;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 
 class ArtistController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     * アーティスト一覧を表示する
+     * アーティストリストを表示する
+     * (URLで指定されたユーザーのリストを表示)
+     *
+     * @return View
      */
-    public function index(): View
+    public function index(Request $request): View
     {
+        // リクエストされたパスとurl_nameが一致するユーザーを検索する
+        $user = User::where('url_name', $request->path())->first();
+
+        // リクエストされたurl_nameと紐づくユーザーのアーティストリストを表示する
         return view('artists.index', [
-            'artists' => Artist::with('user')->latest()->paginate(20),
+            'artists' => Artist::where('user_id', $user->id)->latest()->paginate(20),
         ]);
     }
 
     /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
      * アーティスト名を追加する
+     *
+     * @param Request $request
+     * @return RedirectResponse
      */
     public function store(Request $request): RedirectResponse
     {
@@ -38,39 +40,32 @@ class ArtistController extends Controller
         $validated = $request->validate([
             'name' => 'required | string | max:100',
         ]);
-
-        // アーティスト名を追加して、ホームにリダイレクトする
+        // アーティスト名を追加して、編集ページにリダイレクトする
         $request->user()->artists()->create($validated);
-        return redirect(route('artists.index'));
+        return redirect(route('artists.editArtists'));
     }
 
     /**
-     * Display the specified resource.
+     * アーティストリスト編集ページを表示する
+     * (ログイン中のユーザーのリストを表示)
+     *
+     * @param Artist $artist
+     * @return View
      */
-    public function show(Artist $artist)
+    public function editArtists(Artist $artist): View
     {
-        //
+        $user = Auth::user();
+
+        return view('artists.editArtists', [
+            'artists' => Artist::where('user_id', $user->id)->latest()->paginate(20),
+        ]);
     }
 
     /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Artist $artist)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, Artist $artist)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
      * アーティスト名を削除する
+     *
+     * @param Artist $artist
+     * @return RedirectResponse
      */
     public function destroy(Artist $artist): RedirectResponse
     {

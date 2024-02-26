@@ -12,6 +12,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules;
 use Illuminate\View\View;
+use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Route;
 
 class RegisteredUserController extends Controller
 {
@@ -32,13 +34,24 @@ class RegisteredUserController extends Controller
     {
         $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'url_name' => [
+                'required',
+                'string',
+                'lowercase',
+                'regex:/^[a-z0-9-]+$/',
+                'not_regex:/^-|-$/',
+                'max:255',
+                'unique:' . User::class,
+                Rule::notIn(array_column(Route::getRoutes()->getRoutes(), 'uri'))
+            ],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:' . User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'url_name' => $request->url_name,
             'password' => Hash::make($request->password),
         ]);
 
