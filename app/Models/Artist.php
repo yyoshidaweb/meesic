@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
+
 
 class Artist extends Model
 {
@@ -15,9 +15,13 @@ class Artist extends Model
         'name',
     ];
 
-    // ArtistからUserへのリレーション
-    public function user(): BelongsTo
+    /**
+     * UserとArtistに多対多のリレーションを定義する
+     *
+     * @return void
+     */
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class, 'artist_user', 'artist_id', 'user_id');
     }
 }

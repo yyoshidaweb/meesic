@@ -40,8 +40,11 @@ class ArtistController extends Controller
         $validated = $request->validate([
             'name' => 'required | string | max:100',
         ]);
-        // アーティスト名を追加して、編集ページにリダイレクトする
-        $request->user()->artists()->create($validated);
+        // アーティストモデル内に新しいアーティストを作成する
+        $artist = Artist::create($validated);
+        // ログイン中ユーザーとアーティストを関連づける
+        $request->user()->artists()->attach($artist->id);
+        // 編集ページにリダイレクトする
         return redirect(route('artists.editArtists'));
     }
 
