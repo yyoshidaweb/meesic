@@ -24,7 +24,7 @@ class ArtistController extends Controller
 
         // リクエストされたurl_nameと紐づくユーザーのアーティストリストを表示する
         return view('artists.index', [
-            'artists' => Artist::where('user_id', $user->id)->latest()->paginate(20),
+            'artists' => $user->artists()->latest()->paginate(20),
         ]);
     }
 
@@ -42,8 +42,8 @@ class ArtistController extends Controller
         ]);
         // アーティストモデル内に新しいアーティストを作成する
         $artist = Artist::create($validated);
-        // ログイン中ユーザーとアーティストを関連づける
-        $request->user()->artists()->attach($artist->id);
+        // 作成されたアーティストとログイン中ユーザーを関連づける
+        $artist->users()->attach($request->user()->id);
         // 編集ページにリダイレクトする
         return redirect(route('artists.editArtists'));
     }
@@ -60,7 +60,7 @@ class ArtistController extends Controller
         $user = Auth::user();
 
         return view('artists.editArtists', [
-            'artists' => Artist::where('user_id', $user->id)->latest()->paginate(20),
+            'artists' => $user->artists()->latest()->paginate(20),
         ]);
     }
 
@@ -72,8 +72,9 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist): RedirectResponse
     {
-        $this->authorize('delete', $artist);
-        $artist->delete();
-        return redirect(route('artists.index'));
+        $this->authorize('detach', $artist);
+        // 中間テーブルから紐付けを解除
+        $artist->users()->detach(auth()->user()->id);
+        return redirect(route('artists.editArtists'));
     }
 }

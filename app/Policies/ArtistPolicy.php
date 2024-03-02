@@ -44,9 +44,10 @@ class ArtistPolicy
      * Determine whether the user can delete the model.
      * ユーザーがアーティスト名を削除することを認可する
      */
-    public function delete(User $user, Artist $artist): bool
+    public function detach(User $user, Artist $artist): bool
     {
-        return $artist->user()->is($user);
+        // ログイン中ユーザーとアーティストが紐づけられているかどうかを判定
+        return $artist->users->contains(auth()->user());
     }
 
     /**
