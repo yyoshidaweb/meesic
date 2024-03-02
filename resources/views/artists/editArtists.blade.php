@@ -30,7 +30,7 @@
                 <p class="">{{ $artist->name }}</p>
             </div>
             {{-- もし削除権限がある場合に表示する --}}
-            @if ($artist->user->is(auth()->user()))
+            @if ($artist->users->contains(auth()->user()))
                 <form method="POST" action="{{ route('artists.destroy', $artist) }}">
                     @csrf
                     @method('delete')
