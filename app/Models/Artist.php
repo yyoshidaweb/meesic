@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Artist extends Model
 {
@@ -13,6 +13,7 @@ class Artist extends Model
     // 一括割り当ての有効化
     protected $fillable = [
         'name',
+        'user_id',
     ];
 
     /**
@@ -20,8 +21,8 @@ class Artist extends Model
      *
      * @return void
      */
-    public function users()
+    public function users(): BelongsToMany
     {
-        return $this->belongsToMany(User::class, 'artist_user', 'artist_id', 'user_id');
+        return $this->belongsToMany(User::class);
     }
 }
