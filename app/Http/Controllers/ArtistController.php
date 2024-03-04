@@ -57,7 +57,10 @@ class ArtistController extends Controller
      */
     public function editArtists(Artist $artist): View
     {
-        $user = Auth::user();
+        // 認証情報に関するユーザー情報を取得する
+        $authUser = Auth::user();
+        // 認証情報のIDからアーティスト情報を管理するためのユーザー情報を取得する
+        $user = User::find($authUser->getAuthIdentifier());
 
         return view('artists.editArtists', [
             'artists' => $user->artists()->latest()->paginate(20),
