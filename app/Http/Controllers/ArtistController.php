@@ -75,9 +75,15 @@ class ArtistController extends Controller
      */
     public function destroy(Artist $artist): RedirectResponse
     {
+        // ユーザーがdetachを行うことを認可されているか判定する
         $this->authorize('detach', $artist);
+
+        // アーティストのIDから削除するアーティストデータを取得
+        $detachArtist = Artist::find($artist->id);
         // 中間テーブルから紐付けを解除
-        $artist->users()->detach(auth()->user()->id);
+        $detachArtist->users()->detach(auth()->user()->id);
+
+        // アーティストリスト編集ページにリダイレクトする
         return redirect(route('artists.editArtists'));
     }
 }
