@@ -73,7 +73,7 @@ class ArtistController extends Controller
      * @param Artist $artist
      * @return RedirectResponse
      */
-    public function destroy(Artist $artist): RedirectResponse
+    public function detach(Artist $artist): RedirectResponse
     {
         // ユーザーがdetachを行うことを認可されているか判定する
         $this->authorize('detach', $artist);

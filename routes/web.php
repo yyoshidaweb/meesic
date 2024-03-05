@@ -40,7 +40,7 @@ Route::controller(ArtistController::class)->middleware(['auth', 'verified'])->gr
     // アーティスト追加を実行する
     Route::post('/artists', 'store')->name('artists.store');
     // アーティスト削除を実行する
-    Route::delete('/artists/{artist}', 'destroy')->name('artists.destroy');
+    Route::delete('/artists/{artist}', 'detach')->name('artists.detach');
 });
 
 // auth.phpファイル内のルーティングを読み込む

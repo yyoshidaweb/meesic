@@ -31,7 +31,7 @@
             </div>
             {{-- もし削除権限がある場合に表示する --}}
             @if ($artist->users->contains(auth()->user()))
-                <form method="POST" action="{{ route('artists.destroy', $artist) }}">
+                <form method="POST" action="{{ route('artists.detach', $artist) }}">
                     @csrf
                     @method('delete')
                     <x-primary-button
