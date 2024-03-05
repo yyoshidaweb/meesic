@@ -62,7 +62,7 @@ class ArtistController extends Controller
         // 認証情報のIDからアーティスト情報を管理するためのユーザー情報を取得する
         $user = User::find($authUser->getAuthIdentifier());
 
-        return view('artists.editArtists', [
+        return view('artists.edit-artists', [
             'artists' => $user->artists()->latest()->paginate(20),
         ]);
     }
