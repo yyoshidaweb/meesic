@@ -36,14 +36,27 @@ class ArtistController extends Controller
      */
     public function add(Request $request): RedirectResponse
     {
-        // バリデーション
+        // リクエストされた値にバリデーションを行う
         $validated = $request->validate([
             'name' => 'required | string | max:100',
         ]);
-        // アーティストモデル内に新しいアーティストを作成する
-        $artist = Artist::create($validated);
-        // 作成されたアーティストとログイン中ユーザーを関連づける
-        $artist->users()->attach($request->user()->id);
+
+        // リクエストを送信したユーザーの情報を取得
+        $user = $request->user();
+        // artistsテーブル内のnameカラムの値と、リクエストされた値が一致するアーティストを取得
+        $artist = Artist::where('name', $validated)->first();
+
+        // 一致するアーティストが存在し、まだユーザーに紐づけられていない場合
+        if ($artist && $artist->users->doesntContain($user)) {
+            // 一致するアーティストとユーザーを紐づける
+            $artist->users()->attach($user->id);
+        } else if (!$artist) {
+            // アーティストモデル内に新しいアーティストを作成する
+            $artist = Artist::create($validated);
+            // 作成されたアーティストとログイン中ユーザーを紐づける
+            $artist->users()->attach($user->id);
+        }
+
         // 編集ページにリダイレクトする
         return redirect(route('artists.editArtists'));
     }
