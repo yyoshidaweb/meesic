@@ -34,7 +34,7 @@ class ArtistController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function add(Request $request): RedirectResponse
     {
         // バリデーション
         $validated = $request->validate([

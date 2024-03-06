@@ -38,7 +38,7 @@ Route::controller(ArtistController::class)->middleware(['auth', 'verified'])->gr
     // アーティストリスト編集画面を表示する
     Route::get('/artists/edit-artists', 'editArtists')->name('artists.editArtists');
     // アーティスト追加を実行する
-    Route::post('/artists', 'store')->name('artists.store');
+    Route::post('/artists', 'add')->name('artists.add');
     // アーティスト削除を実行する
     Route::delete('/artists/{artist}', 'detach')->name('artists.detach');
 });

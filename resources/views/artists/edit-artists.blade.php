@@ -2,7 +2,7 @@
     {{-- アーティスト追加フォーム全体 --}}
     <div class="">
         {{-- POSTリクエストでstoreメソッドを使用 --}}
-        <form method="POST" action="{{ route('artists.store') }}">
+        <form method="POST" action="{{ route('artists.add') }}">
             {{-- CSRF保護 --}}
             @csrf
             {{-- 入力エリア --}}
