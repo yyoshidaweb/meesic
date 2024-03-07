@@ -24,7 +24,7 @@ class ArtistController extends Controller
 
         // リクエストされたurl_nameと紐づくユーザーのアーティストリストを表示する
         return view('artists.index', [
-            'artists' => Artist::where('user_id', $user->id)->latest()->paginate(20),
+            'artists' => $user->artists()->latest()->paginate(20),
         ]);
     }
 
@@ -34,14 +34,30 @@ class ArtistController extends Controller
      * @param Request $request
      * @return RedirectResponse
      */
-    public function store(Request $request): RedirectResponse
+    public function add(Request $request): RedirectResponse
     {
-        // バリデーション
+        // リクエストされた値にバリデーションを行う
         $validated = $request->validate([
             'name' => 'required | string | max:100',
         ]);
-        // アーティスト名を追加して、編集ページにリダイレクトする
-        $request->user()->artists()->create($validated);
+
+        // リクエストを送信したユーザーの情報を取得
+        $user = $request->user();
+        // artistsテーブル内のnameカラムの値と、リクエストされた値が一致するアーティストを取得
+        $artist = Artist::where('name', $validated)->first();
+
+        // 一致するアーティストが存在し、まだユーザーに紐づけられていない場合
+        if ($artist && $artist->users->doesntContain($user)) {
+            // 一致するアーティストとユーザーを紐づける
+            $artist->users()->attach($user->id);
+        } else if (!$artist) {
+            // アーティストモデル内に新しいアーティストを作成する
+            $artist = Artist::create($validated);
+            // 作成されたアーティストとログイン中ユーザーを紐づける
+            $artist->users()->attach($user->id);
+        }
+
+        // 編集ページにリダイレクトする
         return redirect(route('artists.editArtists'));
     }
 
@@ -54,10 +70,13 @@ class ArtistController extends Controller
      */
     public function editArtists(Artist $artist): View
     {
-        $user = Auth::user();
+        // 認証情報に関するユーザー情報を取得する
+        $authUser = Auth::user();
+        // 認証情報のIDからアーティスト情報を管理するためのユーザー情報を取得する
+        $user = User::find($authUser->getAuthIdentifier());
 
-        return view('artists.editArtists', [
-            'artists' => Artist::where('user_id', $user->id)->latest()->paginate(20),
+        return view('artists.edit-artists', [
+            'artists' => $user->artists()->latest()->paginate(20),
         ]);
     }
 
@@ -67,10 +86,17 @@ class ArtistController extends Controller
      * @param Artist $artist
      * @return RedirectResponse
      */
-    public function destroy(Artist $artist): RedirectResponse
+    public function detach(Artist $artist): RedirectResponse
     {
-        $this->authorize('delete', $artist);
-        $artist->delete();
-        return redirect(route('artists.index'));
+        // ユーザーがdetachを行うことを認可されているか判定する
+        $this->authorize('detach', $artist);
+
+        // アーティストのIDから削除するアーティストデータを取得
+        $detachArtist = Artist::find($artist->id);
+        // 中間テーブルから紐付けを解除
+        $detachArtist->users()->detach(auth()->user()->id);
+
+        // アーティストリスト編集ページにリダイレクトする
+        return redirect(route('artists.editArtists'));
     }
 }

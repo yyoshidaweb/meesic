@@ -2,7 +2,7 @@
     {{-- アーティスト追加フォーム全体 --}}
     <div class="">
         {{-- POSTリクエストでstoreメソッドを使用 --}}
-        <form method="POST" action="{{ route('artists.store') }}">
+        <form method="POST" action="{{ route('artists.add') }}">
             {{-- CSRF保護 --}}
             @csrf
             {{-- 入力エリア --}}
@@ -30,8 +30,8 @@
                 <p class="">{{ $artist->name }}</p>
             </div>
             {{-- もし削除権限がある場合に表示する --}}
-            @if ($artist->user->is(auth()->user()))
-                <form method="POST" action="{{ route('artists.destroy', $artist) }}">
+            @if ($artist->users->contains(auth()->user()))
+                <form method="POST" action="{{ route('artists.detach', $artist) }}">
                     @csrf
                     @method('delete')
                     <x-primary-button
