@@ -1,7 +1,7 @@
 <x-app-layout>
     {{-- アーティスト追加フォーム全体 --}}
     <div class="">
-        {{-- POSTリクエストでstoreメソッドを使用 --}}
+        {{-- POSTリクエストでaddメソッドを使用 --}}
         <form method="POST" action="{{ route('artists.add') }}">
             {{-- CSRF保護 --}}
             @csrf
