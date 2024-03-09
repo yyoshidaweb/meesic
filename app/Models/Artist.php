@@ -19,7 +19,7 @@ class Artist extends Model
     /**
      * UserとArtistに多対多のリレーションを定義する
      *
-     * @return void
+     * @return BelongsToMany
      */
     public function users(): BelongsToMany
     {
