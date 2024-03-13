@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\SpotifyArtist;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Crypt;
 
 class SpotifyArtistController extends Controller
 {
@@ -50,7 +49,7 @@ class SpotifyArtistController extends Controller
      *
      * @return void
      */
-    public function getArtistById($spotify_id = '00DuPiLri3mNomvvM3nZvU')
+    public function getArtistById($spotify_id)
     {
         // クライアントを作成
         $client = new \GuzzleHttp\Client();
@@ -74,6 +73,6 @@ class SpotifyArtistController extends Controller
         // アーティストデータを連想配列に変更
         $result_artist = json_decode($response->getBody()->getContents(), true);
 
-        return $result_artist['name'];
+        return $result_artist;
     }
 }
