@@ -12,8 +12,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // Spotify APIのアクセストークンを55分に一回のペースで取得する
-        $schedule->command('command:get-spotify-access-token')->cron('*,55 * * * *');
+        //
     }
 
     /**

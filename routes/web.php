@@ -34,8 +34,13 @@ Route::middleware('auth')->group(function () {
 /**
  * SpotifyArtistControllerのルーティンググループ
  */
+// ログイン済みユーザー用
 Route::controller(SpotifyArtistController::class)->middleware(['auth', 'verified'])->group(function () {
-    Route::get('/refresh-token', 'getAccessToken')->name('spotify.getAccessToken');
+});
+
+// 未ログインユーザー用
+Route::controller(SpotifyArtistController::class)->group(function () {
+    Route::get('/spotify/get-artist-by-id', 'getArtistById')->name('spotify.getArtistById');
 });
 
 /**
