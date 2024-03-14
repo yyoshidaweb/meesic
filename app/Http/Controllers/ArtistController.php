@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use App\Http\Controllers\SpotifyArtistController;
 
 class ArtistController extends Controller
 {
@@ -77,6 +78,35 @@ class ArtistController extends Controller
 
         return view('artists.edit-artists', [
             'artists' => $user->artists()->latest()->paginate(20),
+        ]);
+    }
+
+    /**
+     * アーティストを検索する
+     *
+     * @param Artist $artist
+     * @return View
+     */
+    public function searchArtists(Artist $artist, Request $request): View
+    {
+        // リクエストをバリデートする
+        $validated = $request->validate([
+            'keyword' => 'required | string | max:100',
+        ]);
+        // SpotifyArtistControllerのインスタンスを作成
+        $spotify_artist_controller = new SpotifyArtistController;
+        
+        // 認証情報に関するユーザー情報を取得する
+        $authUser = Auth::user();
+        // 認証情報のIDからアーティスト情報を管理するためのユーザー情報を取得する
+        $user = User::find($authUser->getAuthIdentifier());
+
+
+        $result_artists = $spotify_artist_controller->searchArtists($validated['keyword']);
+
+        return view('artists.edit-artists', [
+            'artists' => $user->artists()->latest()->paginate(20),
+            'result_artists' => $result_artists,
         ]);
     }
 

@@ -1,4 +1,39 @@
 <x-app-layout>
+    {{-- アーティスト検索フォーム全体 --}}
+    <div class="">
+        {{-- POSTリクエストでsearchArtistsメソッドを使用 --}}
+        <form method="POST" action="{{ route('artists.searchArtists') }}">
+            {{-- CSRF保護 --}}
+            @csrf
+            {{-- 入力エリア --}}
+            <label>
+                <input
+                    type="text"
+                    name="keyword"
+                    placeholder="アーティスト名を入力してください"
+                    value="{{ old('keyword') }}"
+                    class=""
+                />
+                {{-- エラーメッセージを表示する --}}
+                <x-input-error :messages="$errors->get('keyword')" class="" />
+                {{-- 送信ボタン --}}
+                <x-primary-button class="">検索</x-primary-button>
+            </label>
+        </form>
+    </div>
+
+    {{-- 検索結果を表示 --}}
+    <div class="">
+        @isset($result_artists)
+            <p class="">検索結果:</p>
+            @foreach ($result_artists as $result_artist)
+                <div class="">
+                    <p class="">{{ $result_artist['name'] }}</p>
+                </div>
+            @endforeach
+        @endisset
+    </div>
+
     {{-- アーティスト追加フォーム全体 --}}
     <div class="">
         {{-- POSTリクエストでaddメソッドを使用 --}}
