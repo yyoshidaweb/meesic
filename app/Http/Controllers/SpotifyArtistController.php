@@ -47,9 +47,10 @@ class SpotifyArtistController extends Controller
     /**
      * Spotify IDを元にSpotify上のアーティストデータを取得する
      *
+     * @param string $spotify_id
      * @return void
      */
-    public function getArtistById($spotify_id)
+    public function getArtistById(string $spotify_id)
     {
         // クライアントを作成
         $client = new \GuzzleHttp\Client();
@@ -74,5 +75,48 @@ class SpotifyArtistController extends Controller
         $result_artist = json_decode($response->getBody()->getContents(), true);
 
         return $result_artist;
+    }
+
+    /**
+     * Spotify上のアーティストを検索する
+     *
+     * @param string $key_word
+     * @return void
+     */
+    public function searchArtists(string $keyword)
+    {
+        // クライアントを作成
+        $client = new \GuzzleHttp\Client();
+
+        // 新たなアクセストークンを取得する。
+        $access_token = $this->getAccessToken();
+
+        // リクエストヘッダー
+        $headers = [
+            'Authorization' => 'Bearer ' . $access_token,
+            'Accept-Language' => 'ja',
+        ];
+        // リクエストパラメータ
+        $params = [
+            'q' => $keyword,
+            'type' => 'artist',
+            'limit' => '5',
+        ];
+        // URL
+        $url = 'https://api.spotify.com/v1/search';
+        // リクエストオプション
+        $options = [
+            'query' => $params,
+            'headers' => $headers,
+        ];
+        // リクエストを実行
+        $response = $client->request('GET', $url, $options);
+        // 検索結果を連想配列に変更
+        $data = json_decode($response->getBody()->getContents(), true);
+        // 検索結果からアーティストデータのみを取得
+        $result_artists = $data['artists']['items'];
+
+        // 検索結果を返す
+        return $result_artists;
     }
 }
