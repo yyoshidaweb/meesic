@@ -80,11 +80,12 @@ class ArtistController extends Controller
         $spotify_ids = $user->spotifyArtists()->pluck('spotify_id')->toArray();
         // spotify_idsをコンマ区切りの文字列に変更する
         $comma_separated_spotify_ids = implode(',', $spotify_ids);
-
+        // SpotifyArtistControllerインスタンスを作成
         $spotify_artist_controller = new SpotifyArtistController;
-
+        // Spotify APIからアーティストデータを取得
         $spotify_artists = $spotify_artist_controller->getArtistsById($comma_separated_spotify_ids);
 
+        // 編集ページにリダイレクト
         return view('artists.edit-artists', [
             'spotify_artists' => $spotify_artists,
             'artists' => $user->artists()->latest()->paginate(20),
