@@ -23,8 +23,18 @@ class ArtistController extends Controller
         // リクエストされたパスとurl_nameが一致するユーザーを検索する
         $user = User::where('url_name', $request->path())->first();
 
+        // ユーザーに紐づいたspotify_idをすべて取得する
+        $spotify_ids = $user->spotifyArtists()->pluck('spotify_id')->toArray();
+        // spotify_idsをコンマ区切りの文字列に変更する
+        $comma_separated_spotify_ids = implode(',', $spotify_ids);
+        // SpotifyArtistControllerインスタンスを作成
+        $spotify_artist_controller = new SpotifyArtistController;
+        // Spotify APIからアーティストデータを取得
+        $spotify_artists = $spotify_artist_controller->getArtistsById($comma_separated_spotify_ids);
+
         // リクエストされたurl_nameと紐づくユーザーのアーティストリストを表示する
         return view('artists.index', [
+            'spotify_artists' => $spotify_artists,
             'artists' => $user->artists()->latest()->paginate(20),
         ]);
     }
