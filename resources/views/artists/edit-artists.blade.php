@@ -24,11 +24,25 @@
 
     {{-- 検索結果を表示 --}}
     <div class="">
+        {{-- 検索結果が存在する場合に表示 --}}
         @isset($result_artists)
             <p class="">検索結果:</p>
+            {{-- 検索結果一覧を表示 --}}
             @foreach ($result_artists as $result_artist)
-                <div class="flex">
+                <div class="flex mb-2">
+                    {{-- アーティスト名 --}}
                     <p class="mr-4">{{ $result_artist['name'] }}</p>
+                    {{-- spotify_idを保存するフォーム --}}
+                    <form method="POST" action="{{ route('spotify.storeSpotifyId') }}">
+                        {{-- CSRF保護 --}}
+                        @csrf
+                        {{-- spotify_id入力フォーム（非表示） --}}
+                        <input type="hidden" name="spotify_id" value="{{ $result_artist['id'] }}">
+                        {{-- エラーを表示 --}}
+                        <x-input-error :messages="$errors->get('spotify_id')" class="" />
+                        {{-- 送信ボタン --}}
+                        <x-primary-button class="">リストに追加</x-primary-button>
+                    </form>
                 </div>
             @endforeach
         @endisset

@@ -119,4 +119,31 @@ class SpotifyArtistController extends Controller
         // 検索結果を返す
         return $result_artists;
     }
+
+    public function storeSpotifyId(Request $request)
+    {
+        // リクエストされた値にバリデーションを行う
+        $validated = $request->validate([
+            'spotify_id' => 'required | string | max:100',
+        ]);
+
+        // リクエストを送信したユーザーの情報を取得
+        $user = $request->user();
+        // spotify_artistsテーブル内のspotify_idカラムの値と、リクエストされた値が一致するアーティストを取得
+        $spotify_artist = SpotifyArtist::where('spotify_id', $validated)->first();
+
+        // 一致するアーティストが存在し、まだユーザーに紐づけられていない場合
+        if ($spotify_artist && $spotify_artist->users->doesntContain($user)) {
+            // 一致するアーティストとユーザーを紐づける
+            $spotify_artist->users()->attach($user->id);
+        } else if (!$spotify_artist) {
+            // アーティストモデル内に新しいアーティストを作成する
+            $spotify_artist = SpotifyArtist::create($validated);
+            // 作成されたアーティストとログイン中ユーザーを紐づける
+            $spotify_artist->users()->attach($user->id);
+        }
+
+        // 編集ページにリダイレクトする
+        return redirect(route('artists.editArtists'));
+    }
 }

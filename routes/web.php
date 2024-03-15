@@ -36,6 +36,7 @@ Route::middleware('auth')->group(function () {
  */
 // ログイン済みユーザー用
 Route::controller(SpotifyArtistController::class)->middleware(['auth', 'verified'])->group(function () {
+    Route::post('/spotify/store-spotify-id', 'storeSpotifyId')->name('spotify.storeSpotifyId');
 });
 
 // 未ログインユーザー用
