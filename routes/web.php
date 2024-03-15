@@ -41,6 +41,8 @@ Route::controller(SpotifyArtistController::class)->middleware(['auth', 'verified
 
 // 未ログインユーザー用
 Route::controller(SpotifyArtistController::class)->group(function () {
+
+    Route::get('/spotify/get-artists', 'getArtistsById')->name('spotify.getArtistsById');
     Route::post('/spotify/search-artists', 'searchArtists')->name('spotify.searchArtists');
 });
 

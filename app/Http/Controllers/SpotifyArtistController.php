@@ -45,12 +45,12 @@ class SpotifyArtistController extends Controller
     }
 
     /**
-     * Spotify IDを元にSpotify上のアーティストデータを取得する
+     * Spotify IDを元にSpotify上の複数のアーティストデータを取得する
      *
      * @param string $spotify_id
      * @return void
      */
-    public function getArtistById(string $spotify_id)
+    public function getArtistsById(string $spotify_ids)
     {
         // クライアントを作成
         $client = new \GuzzleHttp\Client();
@@ -63,18 +63,25 @@ class SpotifyArtistController extends Controller
             'Authorization' => 'Bearer ' . $access_token,
             'Accept-Language' => 'ja',
         ];
-        // 取得したいアーティストのSpotify IDを含めたURL
-        $url = 'https://api.spotify.com/v1/artists/' . $spotify_id;
+        // リクエストパラメータ
+        $params = [
+            'ids' => $spotify_ids,
+        ];
+        // URL
+        $url = 'https://api.spotify.com/v1/artists';
         // リクエストオプション
         $options = [
+            'query' => $params,
             'headers' => $headers,
         ];
         // リクエストを実行
         $response = $client->request('GET', $url, $options);
         // アーティストデータを連想配列に変更
-        $result_artist = json_decode($response->getBody()->getContents(), true);
+        $data = json_decode($response->getBody()->getContents(), true);
 
-        return $result_artist;
+        $result_artists = $data['artists'];
+
+        return $result_artists;
     }
 
     /**

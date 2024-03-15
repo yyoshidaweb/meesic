@@ -76,7 +76,17 @@ class ArtistController extends Controller
         // 認証情報のIDからアーティスト情報を管理するためのユーザー情報を取得する
         $user = User::find($authUser->getAuthIdentifier());
 
+        // ユーザーに紐づいたspotify_idをすべて取得する
+        $spotify_ids = $user->spotifyArtists()->pluck('spotify_id')->toArray();
+        // spotify_idsをコンマ区切りの文字列に変更する
+        $comma_separated_spotify_ids = implode(',', $spotify_ids);
+
+        $spotify_artist_controller = new SpotifyArtistController;
+
+        $spotify_artists = $spotify_artist_controller->getArtistsById($comma_separated_spotify_ids);
+
         return view('artists.edit-artists', [
+            'spotify_artists' => $spotify_artists,
             'artists' => $user->artists()->latest()->paginate(20),
         ]);
     }
@@ -95,7 +105,7 @@ class ArtistController extends Controller
         ]);
         // SpotifyArtistControllerのインスタンスを作成
         $spotify_artist_controller = new SpotifyArtistController;
-        
+
         // 認証情報に関するユーザー情報を取得する
         $authUser = Auth::user();
         // 認証情報のIDからアーティスト情報を管理するためのユーザー情報を取得する

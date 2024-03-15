@@ -74,6 +74,14 @@
 
     {{-- アーティスト一覧を表示 --}}
     <div class="">
+        @isset($spotify_artists)
+            @foreach ($spotify_artists as $spotify_artist)
+                <div class="">
+                    <p class="">{{ $spotify_artist['name'] }}</p>
+                </div>
+            @endforeach
+        @endisset
+
         @foreach ($artists as $artist)
             <div class="">
                 <p class="">{{ $artist->name }}</p>
