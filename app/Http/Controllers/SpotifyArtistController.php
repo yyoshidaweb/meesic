@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\SpotifyArtist;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class SpotifyArtistController extends Controller
 {
@@ -151,6 +152,23 @@ class SpotifyArtistController extends Controller
         }
 
         // 編集ページにリダイレクトする
+        return redirect(route('artists.editArtists'));
+    }
+
+    public function detach(string $spotify_id): RedirectResponse
+    {
+        // spotify_idを元にSpotifyモデルを取得
+        $spotify_artist = SpotifyArtist::where('spotify_id', $spotify_id)->first();
+
+        // ユーザーがdetachを行うことを認可されているか判定する
+        $this->authorize('detach', $spotify_artist);
+
+        // アーティストのIDから削除するアーティストデータを取得
+        $detachArtist = SpotifyArtist::find($spotify_artist->id);
+        // 中間テーブルから紐付けを解除
+        $detachArtist->users()->detach(auth()->user()->id);
+
+        // アーティストリスト編集ページにリダイレクトする
         return redirect(route('artists.editArtists'));
     }
 }

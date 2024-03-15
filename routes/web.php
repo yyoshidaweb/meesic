@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
 // ログイン済みユーザー用
 Route::controller(SpotifyArtistController::class)->middleware(['auth', 'verified'])->group(function () {
     Route::post('/spotify/store-spotify-id', 'storeSpotifyId')->name('spotify.storeSpotifyId');
+    Route::delete('/spotify/{spotify_id}', 'detach')->name('spotify.detach');
 });
 
 // 未ログインユーザー用

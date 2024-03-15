@@ -82,6 +82,16 @@
                     {{-- アーティスト名 --}}
                     <p class="">{{ $spotify_artist['name'] }}</p>
                 </div>
+                {{-- 削除 --}}
+                <form method="POST" action="{{ route('spotify.detach', $spotify_artist['id']) }}">
+                    @csrf
+                    @method('delete')
+                    <x-primary-button
+                        type="submit"
+                        class="bg-red-500"
+                        onclick="return confirm('本当に削除しますか？')"
+                    >削除</x-primary-button>
+                </form>
             @endforeach
         @endisset
 
