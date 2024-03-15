@@ -48,10 +48,20 @@ class User extends Authenticatable
     /**
      * UserとArtistに多対多のリレーションを定義する。
      *
-     * @return void
+     * @return BelongsToMany
      */
     public function artists(): BelongsToMany
     {
         return $this->belongsToMany(Artist::class);
+    }
+
+    /**
+     * UserとSpotifyArtistに多対多のリレーションを定義する
+     *
+     * @return BelongsToMany
+     */
+    public function spotifyArtists(): BelongsToMany
+    {
+        return $this->belongsToMany(SpotifyArtist::class);
     }
 }

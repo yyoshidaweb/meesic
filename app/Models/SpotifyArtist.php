@@ -6,18 +6,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Artist extends Model
+class SpotifyArtist extends Model
 {
     use HasFactory;
 
     // 一括割り当ての有効化
     protected $fillable = [
-        'name',
+        'spotify_id',
         'user_id',
     ];
 
     /**
-     * UserとArtistに多対多のリレーションを定義する
+     * UserとSpotifyArtistに多対多のリレーションを定義する
      *
      * @return BelongsToMany
      */
