@@ -27,8 +27,8 @@
         @isset($result_artists)
             <p class="">検索結果:</p>
             @foreach ($result_artists as $result_artist)
-                <div class="">
-                    <p class="">{{ $result_artist['name'] }}</p>
+                <div class="flex">
+                    <p class="mr-4">{{ $result_artist['name'] }}</p>
                 </div>
             @endforeach
         @endisset
