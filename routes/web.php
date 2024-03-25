@@ -18,7 +18,7 @@ use Faker\Guesser\Name;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('index');
 });
 
 Route::get('/dashboard', function () {
