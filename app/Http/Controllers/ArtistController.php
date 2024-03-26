@@ -110,6 +110,7 @@ class ArtistController extends Controller
         return view('artists.edit-artists', [
             'spotify_artists' => $spotify_artists,
             'artists' => $user->artists()->latest()->paginate(20),
+            'user_name' => $user['name'],
         ]);
     }
 
