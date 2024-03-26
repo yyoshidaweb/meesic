@@ -11,12 +11,12 @@
                 <div class="mt-8 w-full">
                     {{-- Spotify上のアーティストを表示 --}}
                     @foreach ($spotify_artists as $spotify_artist)
-                        <div class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                        <a href="{{ $spotify_artist['external_urls']['spotify'] }}" class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
                             <div class="flex w-full items-center justify-center">
                                 {{-- アーティスト名 --}}
                                 <p class="font-semibold text-gray-900 dark:text-white">{{ $spotify_artist['name'] }}</p>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @endisset
@@ -24,7 +24,7 @@
             @isset($artists)
                 <div class="w-full">
                     @foreach ($artists as $artist)
-                        <div class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                        <div class="mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex">
                             <div class="flex w-full items-center justify-center">
                                 <p class="font-semibold text-gray-900 dark:text-white">{{ $artist->name }}</p>
                             </div>
