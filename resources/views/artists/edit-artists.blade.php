@@ -41,7 +41,7 @@
                     <h3 class="text-xl text-center text-gray-900 dark:text-white">検索結果</h3>
                     {{-- 検索結果一覧を表示 --}}
                     @foreach ($result_artists as $result_artist)
-                        <div class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                        <a href="{{ $result_artist['external_urls']['spotify'] }}" class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
                             <div class="flex w-full items-center justify-between">
                                 {{-- アーティスト名 --}}
                                 <p class="font-semibold text-gray-900 dark:text-white">{{ $result_artist['name'] }}</p>
@@ -57,7 +57,7 @@
                                     <x-primary-button class="shadow-md">リストに追加</x-primary-button>
                                 </form>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @endisset
@@ -68,7 +68,7 @@
                 <div class="mt-4 w-full">
                     {{-- Spotify上のアーティストを表示 --}}
                     @foreach ($spotify_artists as $spotify_artist)
-                        <div class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                        <a href="{{ $spotify_artist['external_urls']['spotify'] }}" class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
                             <div class="flex w-full items-center justify-between">
                                 {{-- アーティスト名 --}}
                                 <p class="font-semibold text-gray-900 dark:text-white">{{ $spotify_artist['name'] }}</p>
@@ -83,7 +83,7 @@
                                     >削除</x-primary-button>
                                 </form>
                             </div>
-                        </div>
+                        </a>
                     @endforeach
                 </div>
             @endisset
@@ -122,7 +122,7 @@
                 {{-- カスタムアーティスト一覧を表示 --}}
                 <div class="mt-4 w-full">
                     @foreach ($artists as $artist)
-                        <div class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                        <div class="mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex">
                             <div class="flex w-full items-center justify-between">
                                 <p class="font-semibold text-gray-900 dark:text-white">{{ $artist->name }}</p>
                                 {{-- もし削除権限がある場合に表示する --}}
