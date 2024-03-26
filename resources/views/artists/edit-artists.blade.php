@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="flex flex-col items-center justify-center">
+    <div class="pb-8 flex flex-col items-center justify-center">
         <div class="mt-8 w-96 flex flex-col items-center justify-center">
             {{-- ユーザー名 --}}
             <div class="">
@@ -117,30 +117,33 @@
                 </form>
             </div>
 
-            {{-- カスタムアーティスト一覧を表示 --}}
-            <div>
-                @foreach ($artists as $artist)
-                    <div class="flex">
-                        <div class="mb-4 mr-2">
-                            <p class="">{{ $artist->name }}</p>
+            {{-- カスタムアーティストが存在する場合 --}}
+            @isset($artists)
+                {{-- カスタムアーティスト一覧を表示 --}}
+                <div class="mt-4 w-full">
+                    @foreach ($artists as $artist)
+                        <div class="mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                            <div class="flex w-full items-center justify-between">
+                                <p class="font-semibold text-gray-900 dark:text-white">{{ $artist->name }}</p>
+                                {{-- もし削除権限がある場合に表示する --}}
+                                @if ($artist->users->contains(auth()->user()))
+                                    <form method="POST" action="{{ route('artists.detach', $artist) }}">
+                                        @csrf
+                                        @method('delete')
+                                        <x-primary-button
+                                            type="submit"
+                                            class="bg-red-500"
+                                            onclick="return confirm('本当に削除しますか？')"
+                                        >削除</x-primary-button>
+                                    </form>
+                                @endif
+                            </div>
                         </div>
-                        {{-- もし削除権限がある場合に表示する --}}
-                        @if ($artist->users->contains(auth()->user()))
-                            <form method="POST" action="{{ route('artists.detach', $artist) }}">
-                                @csrf
-                                @method('delete')
-                                <x-primary-button
-                                    type="submit"
-                                    class="bg-red-500"
-                                    onclick="return confirm('本当に削除しますか？')"
-                                >削除</x-primary-button>
-                            </form>
-                        @endif
-                    </div>
-                @endforeach
-                {{-- ページネーション --}}
-                <div class="paginate">{{ $artists->links() }}</div>
-            </div>
+                    @endforeach
+                    {{-- ページネーション --}}
+                    <div class="paginate text-center">{{ $artists->links() }}</div>
+                </div>
+            @endisset
         </div>
     </div>
 </x-app-layout>

@@ -1,6 +1,6 @@
 <x-app-layout>
     {{-- アーティスト一覧の全体 --}}
-    <div class="flex flex-col items-center justify-center">
+    <div class="pb-8 flex flex-col items-center justify-center">
         <div class="mt-8 w-96 flex flex-col items-center justify-center">
             {{-- ユーザー名 --}}
             <div class="">
