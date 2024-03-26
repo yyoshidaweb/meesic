@@ -37,24 +37,26 @@
             {{-- 検索結果が存在する場合に表示 --}}
             @isset($result_artists)
                 {{-- 検索結果を表示 --}}
-                <div class="">
-                    <h3 class="text-xl">検索結果</h3>
+                <div class="mt-4 mb-32 w-full">
+                    <h3 class="text-xl text-center text-gray-900 dark:text-white">検索結果</h3>
                     {{-- 検索結果一覧を表示 --}}
                     @foreach ($result_artists as $result_artist)
-                        <div class="flex">
-                            {{-- アーティスト名 --}}
-                            <p class="mr-3">{{ $result_artist['name'] }}</p>
-                            {{-- spotify_idを保存するフォーム --}}
-                            <form method="POST" action="{{ route('spotify.storeSpotifyId') }}">
-                                {{-- CSRF保護 --}}
-                                @csrf
-                                {{-- spotify_id入力フォーム（非表示） --}}
-                                <input type="hidden" name="spotify_id" value="{{ $result_artist['id'] }}">
-                                {{-- エラーを表示 --}}
-                                <x-input-error :messages="$errors->get('spotify_id')" class="" />
-                                {{-- 送信ボタン --}}
-                                <x-primary-button class="">リストに追加</x-primary-button>
-                            </form>
+                        <div class="mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                            <div class="flex w-full items-center justify-between">
+                                {{-- アーティスト名 --}}
+                                <p class="font-semibold text-gray-900 dark:text-white">{{ $result_artist['name'] }}</p>
+                                {{-- spotify_idを保存するフォーム --}}
+                                <form method="POST" action="{{ route('spotify.storeSpotifyId') }}">
+                                    {{-- CSRF保護 --}}
+                                    @csrf
+                                    {{-- spotify_id入力フォーム（非表示） --}}
+                                    <input type="hidden" name="spotify_id" value="{{ $result_artist['id'] }}">
+                                    {{-- エラーを表示 --}}
+                                    <x-input-error :messages="$errors->get('spotify_id')" class="" />
+                                    {{-- 送信ボタン --}}
+                                    <x-primary-button class="shadow-md">リストに追加</x-primary-button>
+                                </form>
+                            </div>
                         </div>
                     @endforeach
                 </div>
@@ -87,27 +89,31 @@
             @endisset
 
             {{-- カスタムアーティスト --}}
-            <h2 class="text-2xl">カスタムアーティストを追加</h2>
+            <div class="mt-8">
+                <h2 class="text-xl text-gray-900 dark:text-white">カスタムアーティストを追加</h2>
+            </div>
             {{-- アーティスト追加フォーム全体 --}}
-            <div class="mb-4">
+            <div class="mt-4 w-full flex justify-center">
                 {{-- POSTリクエストでaddメソッドを使用 --}}
                 <form method="POST" action="{{ route('artists.add') }}">
                     {{-- CSRF保護 --}}
                     @csrf
                     {{-- 入力エリア --}}
-                    <label>
-                        <input
-                            type="text"
-                            name="name"
-                            placeholder="アーティスト名を入力してください"
-                            value="{{ old('name') }}"
-                            class=""
-                        />
-                        {{-- エラーメッセージを表示する --}}
-                        <x-input-error :messages="$errors->get('name')" class="" />
+                    <div class="w-full flex">
+                        <div class="flex flex-col">
+                            <input
+                                type="text"
+                                name="name"
+                                placeholder="アーティスト名を入力してください"
+                                value="{{ old('name') }}"
+                                class="rounded"
+                            />
+                            {{-- エラーメッセージを表示する --}}
+                            <x-input-error :messages="$errors->get('name')" class="" />
+                        </div>
                         {{-- 送信ボタン --}}
-                        <x-primary-button class="">リストに追加</x-primary-button>
-                    </label>
+                        <x-primary-button class="ml-2">リストに追加</x-primary-button>
+                    </div>
                 </form>
             </div>
 
