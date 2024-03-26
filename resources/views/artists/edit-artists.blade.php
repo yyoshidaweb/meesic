@@ -23,13 +23,13 @@
                                 name="keyword"
                                 placeholder="アーティスト名を入力してください"
                                 value="{{ old('keyword') }}"
-                                class="rounded"
+                                class="rounded shadow-md"
                             />
                             {{-- エラーメッセージを表示する --}}
                             <x-input-error :messages="$errors->get('keyword')" class="" />
                         </div>
                         {{-- 送信ボタン --}}
-                        <x-primary-button class="ml-2">検索</x-primary-button>
+                        <x-primary-button class="ml-2 shadow-md">検索</x-primary-button>
                     </div>
                 </form>
             </div>
@@ -41,7 +41,7 @@
                     <h3 class="text-xl text-center text-gray-900 dark:text-white">検索結果</h3>
                     {{-- 検索結果一覧を表示 --}}
                     @foreach ($result_artists as $result_artist)
-                        <div class="mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                        <div class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
                             <div class="flex w-full items-center justify-between">
                                 {{-- アーティスト名 --}}
                                 <p class="font-semibold text-gray-900 dark:text-white">{{ $result_artist['name'] }}</p>
@@ -68,7 +68,7 @@
                 <div class="mt-4 w-full">
                     {{-- Spotify上のアーティストを表示 --}}
                     @foreach ($spotify_artists as $spotify_artist)
-                        <div class="mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                        <div class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
                             <div class="flex w-full items-center justify-between">
                                 {{-- アーティスト名 --}}
                                 <p class="font-semibold text-gray-900 dark:text-white">{{ $spotify_artist['name'] }}</p>
@@ -78,7 +78,7 @@
                                     @method('delete')
                                     <x-primary-button
                                         type="submit"
-                                        class="bg-red-500"
+                                        class="bg-red-500 shadow-md"
                                         onclick="return confirm('本当に削除しますか？')"
                                     >削除</x-primary-button>
                                 </form>
@@ -106,13 +106,13 @@
                                 name="name"
                                 placeholder="アーティスト名を入力してください"
                                 value="{{ old('name') }}"
-                                class="rounded"
+                                class="rounded shadow-md"
                             />
                             {{-- エラーメッセージを表示する --}}
                             <x-input-error :messages="$errors->get('name')" class="" />
                         </div>
                         {{-- 送信ボタン --}}
-                        <x-primary-button class="ml-2">リストに追加</x-primary-button>
+                        <x-primary-button class="ml-2 shadow-md">リストに追加</x-primary-button>
                     </div>
                 </form>
             </div>
@@ -122,7 +122,7 @@
                 {{-- カスタムアーティスト一覧を表示 --}}
                 <div class="mt-4 w-full">
                     @foreach ($artists as $artist)
-                        <div class="mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                        <div class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
                             <div class="flex w-full items-center justify-between">
                                 <p class="font-semibold text-gray-900 dark:text-white">{{ $artist->name }}</p>
                                 {{-- もし削除権限がある場合に表示する --}}
@@ -132,7 +132,7 @@
                                         @method('delete')
                                         <x-primary-button
                                             type="submit"
-                                            class="bg-red-500"
+                                            class="bg-red-500 shadow-md"
                                             onclick="return confirm('本当に削除しますか？')"
                                         >削除</x-primary-button>
                                     </form>
