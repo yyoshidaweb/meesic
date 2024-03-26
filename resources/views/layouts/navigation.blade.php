@@ -1,29 +1,49 @@
 <nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
     <!-- Primary Navigation Menu -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
+        <div class="flex h-16">
+            <div class="flex w-full justify-between">
                 {{-- ロゴ(未ログインユーザーにも表示) --}}
                 <div class="shrink-0 flex items-center">
-                    <a href="/">
-                        <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+                    <a href="/" class="text-xl font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                        Meesic
                     </a>
                 </div>
 
                 {{-- ナビゲーション(ログイン済ユーザーにのみ表示) --}}
                 @auth
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
+                    <div class="hidden space-x-8  sm:-my-px sm:ms-10 sm:flex">
+                        {{-- ダッシュボードへのリンク --}}
+                        <x-nav-link
+                            :href="route('dashboard')"
+                            :active="request()->routeIs('dashboard')"
+                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                        >{{ __('Dashboard') }}</x-nav-link>
                         {{-- アーティストリストへのリンク --}}
-                        <x-nav-link :href="route('artists.index', ['url_name' => Auth::user()->url_name])" :active="request()->routeIs('artists.index')">
-                            ホーム
-                        </x-nav-link>
+                        <x-nav-link
+                            :href="route('artists.index', ['url_name' => Auth::user()->url_name])"
+                            :active="request()->routeIs('artists.index')"
+                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                        >ホーム</x-nav-link>
                         {{-- アーティストリスト編集ページへのリンク --}}
-                        <x-nav-link :href="route('artists.editArtists')" :active="request()->routeIs('artists.editArtists')">
-                            編集
+                        <x-nav-link
+                            :href="route('artists.editArtists')"
+                            :active="request()->routeIs('artists.editArtists')"
+                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
+                        >編集</x-nav-link>
+                    </div>
+                @else
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        {{-- ログインボタン --}}
+                        <x-nav-link :href="route('login')" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                            ログイン
                         </x-nav-link>
+                        @if (Route::has('register'))
+                            {{-- 新規登録ボタン --}}
+                            <x-nav-link :href="route('register')" class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
+                                新規登録
+                            </x-nav-link>
+                        @endif
                     </div>
                 @endauth
             </div>
@@ -66,17 +86,15 @@
 
             {{-- ここからモバイル向けナビゲーション --}}
 
-            {{-- ハンバーガーメニュー(ログイン済ユーザーのみに表示) --}}
-            @auth
-                <div class="-me-2 flex items-center sm:hidden">
-                    <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                        <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                            <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                            <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                        </svg>
-                    </button>
-                </div>
-            @endauth
+            {{-- ハンバーガーメニュー(全てのユーザーのみに表示) --}}
+            <div class="-me-2 flex items-center sm:hidden">
+                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
+                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
+                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
         </div>
     </div>
 
@@ -120,6 +138,20 @@
                         </x-responsive-nav-link>
                     </form>
                 </div>
+            </div>
+        </div>
+    @else
+        <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+            <div class="pt-2 pb-3 space-y-1">
+                {{-- ログイン --}}
+                <x-responsive-nav-link :href="route('login')">
+                    ログイン
+                </x-responsive-nav-link>
+                {{-- 新規登録 --}}
+                <x-responsive-nav-link :href="route('register')">
+                    新規登録
+                </x-responsive-nav-link>
+                {{-- アーティストリスト編集ページへのリンク --}}
             </div>
         </div>
     @endauth
