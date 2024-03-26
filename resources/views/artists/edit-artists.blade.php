@@ -6,36 +6,38 @@
                 <p class="text-4xl text-gray-900 dark:text-white">{{ $user_name }}</p>
             </div>
             {{-- Spotifyアーティスト --}}
-            <div class="mt-4 mb-4">
-                <h2 class="text-2xl">Spotifyアーティストを追加</h2>
+            <div class="mt-8">
+                <h2 class="text-xl text-gray-900 dark:text-white">Spotifyアーティストを追加</h2>
             </div>
             {{-- アーティスト検索フォーム全体 --}}
-            <div class="mb-4">
+            <div class="mt-4 w-full flex justify-center">
                 {{-- POSTリクエストでsearchArtistsメソッドを使用 --}}
-                <form method="POST" action="{{ route('artists.searchArtists') }}">
+                <form method="POST" action="{{ route('artists.searchArtists') }}" class="">
                     {{-- CSRF保護 --}}
                     @csrf
-                    {{-- 入力エリア --}}
-                    <label>
-                        <input
-                            type="text"
-                            name="keyword"
-                            placeholder="アーティスト名を入力してください"
-                            value="{{ old('keyword') }}"
-                            class=""
-                        />
-                        {{-- エラーメッセージを表示する --}}
-                        <x-input-error :messages="$errors->get('keyword')" class="" />
+                    <div class="w-full flex">
+                        <div class="flex flex-col">
+                            {{-- 入力エリア --}}
+                            <input
+                                type="text"
+                                name="keyword"
+                                placeholder="アーティスト名を入力してください"
+                                value="{{ old('keyword') }}"
+                                class="rounded"
+                            />
+                            {{-- エラーメッセージを表示する --}}
+                            <x-input-error :messages="$errors->get('keyword')" class="" />
+                        </div>
                         {{-- 送信ボタン --}}
-                        <x-primary-button class="">検索</x-primary-button>
-                    </label>
+                        <x-primary-button class="ml-2">検索</x-primary-button>
+                    </div>
                 </form>
             </div>
 
-            {{-- 検索結果を表示 --}}
-            <div class="">
-                {{-- 検索結果が存在する場合に表示 --}}
-                @isset($result_artists)
+            {{-- 検索結果が存在する場合に表示 --}}
+            @isset($result_artists)
+                {{-- 検索結果を表示 --}}
+                <div class="">
                     <h3 class="text-xl">検索結果</h3>
                     {{-- 検索結果一覧を表示 --}}
                     @foreach ($result_artists as $result_artist)
@@ -55,8 +57,8 @@
                             </form>
                         </div>
                     @endforeach
-                @endisset
-            </div>
+                </div>
+            @endisset
 
             {{-- Spotify_artistsが存在する場合 --}}
             @isset($spotify_artists)
