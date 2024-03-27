@@ -108,7 +108,7 @@ class SpotifyArtistController extends Controller
         $params = [
             'q' => $keyword,
             'type' => 'artist',
-            'limit' => '5',
+            'limit' => '50',
         ];
         // URL
         $url = 'https://api.spotify.com/v1/search';
