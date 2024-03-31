@@ -35,6 +35,7 @@ class GuestUserController extends Controller
             'email' => $unique_str . '@example.com',
             'url_name' => $unique_str,
             'password' => Hash::make($random_password),
+            'role' => 'guest',
         ]);
 
         // ゲストユーザーを作成
