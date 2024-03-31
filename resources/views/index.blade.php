@@ -23,7 +23,7 @@
                         </div>
                     </a>
                     {{-- ゲストログインボタン --}}
-                    <a href="{{ route('guest.register') }}" class="mt-16 scale-100 p-6 bg-gray-800/50 bg-gradient-to-bl from-gray-700/50 via-transparent ring-1 ring-inset ring-white/5 rounded-lg shadow-md shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
+                    <a href="{{ route('guest.register') }}" class="mt-16 scale-100 p-6 bg-gray-800/50  rounded-lg shadow-md flex motion-safe:hover:scale-[1.01] transition-all duration-250">
                         <div class="flex w-full items-center justify-center">
                             <h2 class="text-xl font-semibold text-white">ゲストログイン</h2>
                         </div>
