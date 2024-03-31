@@ -8,10 +8,12 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Prunable;
 
 class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
+    use Prunable;
 
     /**
      * The attributes that are mass assignable.
@@ -23,6 +25,7 @@ class User extends Authenticatable
         'url_name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -44,6 +47,13 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+
+    // Userモデルを定期的に削除する
+    public function prunable()
+    {
+        // 作成後3時間以上経過したゲストユーザーを削除する
+        return static::where('created_at', '<=', now()->subHours(3))->where('role', 'guest');
+    }
 
     /**
      * UserとArtistに多対多のリレーションを定義する。
