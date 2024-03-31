@@ -8,7 +8,14 @@
                     <a href="/" class="text-xl font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white">
                         Meesic
                     </a>
+                    {{-- ゲストユーザーのみに表示 --}}
+                    @can('guest-higher')
+                        <div class="ml-4 p-1 rounded-lg bg-gray-800/50">
+                            <p class=" font-semibold text-white">ゲストユーザーとしてログイン中</p>
+                        </div>
+                    @endcan
                 </div>
+
 
                 {{-- ナビゲーション(ログイン済ユーザーにのみ表示) --}}
                 @auth
