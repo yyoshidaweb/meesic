@@ -1,10 +1,17 @@
 <x-app-layout>
+    <x-slot name="header">
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+            アーティストリスト編集
+        </h2>
+    </x-slot>
     <div class="pb-8 flex flex-col items-center justify-center">
         <div class="mt-8 w-96 flex flex-col items-center justify-center">
             {{-- ユーザー名 --}}
             <div class="">
-                <p class="font-semibold text-xl text-gray-900 dark:text-white">こんにちは！</p>
-                <p class="mt-4 font-semibold text-4xl text-gray-900 dark:text-white">{{ $user_name }}</p>
+                <h2 class="mt-4 font-semibold text-2xl text-gray-900 dark:text-white">こんにちは！{{ $user_name }}</h2>
+                <p class="mt-4 text-gray-900 dark:text-white">
+                    ここではあなたのページに表示されるアーティストリストを編集できます。
+                </p>
             </div>
             {{-- Spotifyアーティスト --}}
             <div class="mt-16">
