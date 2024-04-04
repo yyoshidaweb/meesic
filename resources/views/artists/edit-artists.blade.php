@@ -8,8 +8,8 @@
             </div>
             {{-- Spotifyアーティスト --}}
             <div class="mt-8">
-                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Spotifyに登録されているアーティストの追加はこちら</h2>
-                <h3 class="mt-8 font-semibold text-xl text-gray-900 dark:text-white">追加方法</h3>
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">好きなアーティストがSpotifyに登録されている場合はこちら！</h2>
+                <h3 class="mt-8 font-semibold text-xl text-gray-900 dark:text-white">アーティストの追加方法</h3>
                 <ol class="list-decimal list-inside">
                     <li class="mt-4 text-gray-900 dark:text-white">下の検索フォームに好きなアーティスト名を入力</li>
                     <li class="mt-4 text-gray-900 dark:text-white">検索結果の中から好きなアーティストを探す</li>
@@ -17,7 +17,7 @@
                 </ol>
             </div>
             {{-- アーティスト検索フォーム全体 --}}
-            <div class="mt-8 w-full flex justify-center">
+            <div class="flex flex-col mt-8 w-full flex justify-center">
                 {{-- POSTリクエストでsearchArtistsメソッドを使用 --}}
                 <form method="POST" action="{{ route('artists.searchArtists') }}" class="">
                     {{-- CSRF保護 --}}
@@ -39,6 +39,7 @@
                         <x-primary-button class="ml-2 shadow-md">検索</x-primary-button>
                     </div>
                 </form>
+                <p class="mt-2 text-xs text-gray-900 dark:text-white">※Spotifyに登録されているアーティストのみを検索します。</p>
             </div>
 
             {{-- 検索結果が存在する場合に表示 --}}
@@ -98,15 +99,15 @@
 
             {{-- カスタムアーティスト --}}
             <div class="mt-40">
-                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">上の検索フォームで好きなアーティストが見つからない場合はこちら</h2>
-                <h3 class="mt-8 font-semibold text-xl text-gray-900 dark:text-white">追加方法</h3>
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">好きなアーティストがSpotifyに登録されていない場合はこちら！</h2>
+                <h3 class="mt-8 font-semibold text-xl text-gray-900 dark:text-white">アーティストの追加方法</h3>
                 <ol class="list-decimal list-inside">
                     <li class="mt-4 text-gray-900 dark:text-white">下の入力フォームに好きなアーティスト名を入力</li>
                     <li class="mt-4 text-gray-900 dark:text-white">あとは<strong>リストに追加</strong>ボタンをクリックするだけ！</li>
                 </ol>
             </div>
             {{-- アーティスト追加フォーム全体 --}}
-            <div class="mt-8 w-full flex justify-center">
+            <div class="flex flex-col mt-8 w-full flex justify-center">
                 {{-- POSTリクエストでaddメソッドを使用 --}}
                 <form method="POST" action="{{ route('artists.add') }}">
                     {{-- CSRF保護 --}}
@@ -117,7 +118,7 @@
                             <input
                                 type="text"
                                 name="name"
-                                placeholder="アーティスト名を入力してください"
+                                placeholder="追加したいアーティスト名"
                                 value="{{ old('name') }}"
                                 class="w-64 rounded shadow-md"
                             />
@@ -128,6 +129,7 @@
                         <x-primary-button class="ml-2 shadow-md">リストに追加</x-primary-button>
                     </div>
                 </form>
+                <p class="mt-2 text-xs text-gray-900 dark:text-white">※<strong>リストに追加</strong>ボタンをクリックするとすぐに追加されます。</p>
             </div>
 
             {{-- カスタムアーティストが存在する場合 --}}
