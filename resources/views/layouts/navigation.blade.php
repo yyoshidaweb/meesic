@@ -20,12 +20,6 @@
                 {{-- ナビゲーション(ログイン済ユーザーにのみ表示) --}}
                 @auth
                     <div class="hidden space-x-8  sm:-my-px sm:ms-10 sm:flex">
-                        {{-- ダッシュボードへのリンク --}}
-                        <x-nav-link
-                            :href="route('dashboard')"
-                            :active="request()->routeIs('dashboard')"
-                            class="font-semibold text-gray-600 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
-                        >{{ __('Dashboard') }}</x-nav-link>
                         {{-- アーティストリストへのリンク --}}
                         <x-nav-link
                             :href="route('artists.index', ['url_name' => Auth::user()->url_name])"

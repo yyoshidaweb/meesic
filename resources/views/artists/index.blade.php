@@ -1,7 +1,7 @@
 <x-app-layout>
     {{-- アーティスト一覧の全体 --}}
     <div class="pb-8 flex flex-col items-center justify-center">
-        <div class="mt-8 w-96 flex flex-col items-center justify-center">
+        <div class="mt-8 w-96 flex flex-col items-center justify-center font-semibold">
             {{-- ユーザー名 --}}
             <div class="">
                 <p class="text-4xl text-gray-900 dark:text-white">{{ $user_name }}</p>
