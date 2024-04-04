@@ -3,14 +3,21 @@
         <div class="mt-8 w-96 flex flex-col items-center justify-center">
             {{-- ユーザー名 --}}
             <div class="">
-                <p class="text-4xl text-gray-900 dark:text-white">{{ $user_name }}</p>
+                <p class="font-semibold text-xl text-gray-900 dark:text-white">こんにちは！</p>
+                <p class="mt-4 font-semibold text-4xl text-gray-900 dark:text-white">{{ $user_name }}</p>
             </div>
             {{-- Spotifyアーティスト --}}
             <div class="mt-8">
-                <h2 class="text-xl text-gray-900 dark:text-white">Spotifyアーティストを追加</h2>
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">Spotifyに登録されているアーティストの追加はこちら</h2>
+                <h3 class="mt-8 font-semibold text-xl text-gray-900 dark:text-white">追加方法</h3>
+                <ol class="list-decimal list-inside">
+                    <li class="mt-4 text-gray-900 dark:text-white">下の検索フォームに好きなアーティスト名を入力</li>
+                    <li class="mt-4 text-gray-900 dark:text-white">検索結果の中から好きなアーティストを探す</li>
+                    <li class="mt-4 text-gray-900 dark:text-white">好きなアーティストが見つかったら<strong>リストに追加</strong>ボタンをクリック！</li>
+                </ol>
             </div>
             {{-- アーティスト検索フォーム全体 --}}
-            <div class="mt-4 w-full flex justify-center">
+            <div class="mt-8 w-full flex justify-center">
                 {{-- POSTリクエストでsearchArtistsメソッドを使用 --}}
                 <form method="POST" action="{{ route('artists.searchArtists') }}" class="">
                     {{-- CSRF保護 --}}
@@ -21,9 +28,9 @@
                             <input
                                 type="text"
                                 name="keyword"
-                                placeholder="アーティスト名を入力してください"
+                                placeholder="検索したいアーティスト名"
                                 value="{{ old('keyword') }}"
-                                class="rounded shadow-md"
+                                class="w-72 rounded shadow-md"
                             />
                             {{-- エラーメッセージを表示する --}}
                             <x-input-error :messages="$errors->get('keyword')" class="" />
@@ -37,8 +44,8 @@
             {{-- 検索結果が存在する場合に表示 --}}
             @isset($result_artists)
                 {{-- 検索結果を表示 --}}
-                <div class="mt-4 mb-32 w-full">
-                    <h3 class="text-xl text-center text-gray-900 dark:text-white">検索結果</h3>
+                <div class="mt-4 w-full">
+                    <h3 class="mt-4 font-semibold text-xl text-gray-900 dark:text-white">検索結果</h3>
                     {{-- 検索結果一覧を表示 --}}
                     @foreach ($result_artists as $result_artist)
                         <a href="{{ $result_artist['external_urls']['spotify'] }}" class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
@@ -65,7 +72,8 @@
             {{-- Spotify_artistsが存在する場合 --}}
             @isset($spotify_artists)
                 {{-- Spotifyアーティスト一覧を表示 --}}
-                <div class="mt-4 w-full">
+                <div class="mt-8 w-full">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">アーティストリスト（Spotify）</h3>
                     {{-- Spotify上のアーティストを表示 --}}
                     @foreach ($spotify_artists as $spotify_artist)
                         <a href="{{ $spotify_artist['external_urls']['spotify'] }}" class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
@@ -89,11 +97,16 @@
             @endisset
 
             {{-- カスタムアーティスト --}}
-            <div class="mt-8">
-                <h2 class="text-xl text-gray-900 dark:text-white">カスタムアーティストを追加</h2>
+            <div class="mt-40">
+                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">上の検索フォームで好きなアーティストが見つからない場合はこちら</h2>
+                <h3 class="mt-8 font-semibold text-xl text-gray-900 dark:text-white">追加方法</h3>
+                <ol class="list-decimal list-inside">
+                    <li class="mt-4 text-gray-900 dark:text-white">下の入力フォームに好きなアーティスト名を入力</li>
+                    <li class="mt-4 text-gray-900 dark:text-white">あとは<strong>リストに追加</strong>ボタンをクリックするだけ！</li>
+                </ol>
             </div>
             {{-- アーティスト追加フォーム全体 --}}
-            <div class="mt-4 w-full flex justify-center">
+            <div class="mt-8 w-full flex justify-center">
                 {{-- POSTリクエストでaddメソッドを使用 --}}
                 <form method="POST" action="{{ route('artists.add') }}">
                     {{-- CSRF保護 --}}
@@ -106,7 +119,7 @@
                                 name="name"
                                 placeholder="アーティスト名を入力してください"
                                 value="{{ old('name') }}"
-                                class="rounded shadow-md"
+                                class="w-64 rounded shadow-md"
                             />
                             {{-- エラーメッセージを表示する --}}
                             <x-input-error :messages="$errors->get('name')" class="" />
@@ -120,7 +133,8 @@
             {{-- カスタムアーティストが存在する場合 --}}
             @isset($artists)
                 {{-- カスタムアーティスト一覧を表示 --}}
-                <div class="mt-4 w-full">
+                <div class="mt-8 w-full">
+                    <h3 class="text-xl font-semibold text-gray-900 dark:text-white">アーティストリスト（手動）</h3>
                     @foreach ($artists as $artist)
                         <div class="mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex">
                             <div class="flex w-full items-center justify-between">
