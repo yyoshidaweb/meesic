@@ -46,7 +46,7 @@
                             <x-input-error :messages="$errors->get('keyword')" class="" />
                         </div>
                         {{-- 送信ボタン --}}
-                        <x-primary-button class="ml-2 shadow-md">検索</x-primary-button>
+                        <x-primary-button class="ml-2 max-h-10 shadow-md">検索</x-primary-button>
                     </div>
                 </form>
                 <p class="mt-2 text-xs text-gray-900 dark:text-white">※Spotifyに登録されているアーティストのみを検索します。</p>
@@ -61,8 +61,26 @@
                     @foreach ($result_artists as $result_artist)
                         <a href="{{ $result_artist['external_urls']['spotify'] }}" class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
                             <div class="flex w-full items-center justify-between">
-                                {{-- アーティスト名 --}}
-                                <p class="font-semibold text-gray-900 dark:text-white">{{ $result_artist['name'] }}</p>
+                                {{-- アーティスト情報全体 --}}
+                                <div class="flex items-center">
+                                    {{-- アーティスト画像 --}}
+                                    @isset($result_artist['images']['0']['url'])
+                                        <img
+                                            src="{{ $result_artist['images']['0']['url'] }}"
+                                            alt="{{ $result_artist['name'] }}のアーティスト画像"
+                                            class="min-w-20 w-20 h-20 rounded-full shadow-md"
+                                        >
+                                    @else
+                                        <div class="min-w-20 w-20 h-20 flex justify-center items-center bg-gray-600 rounded-full shadow-md">
+                                            {{-- Googleマテリアルアイコン --}}
+                                            <span class="material-symbols-outlined text-3xl text-white rounded-full">
+                                                person
+                                            </span>
+                                        </div>
+                                    @endisset
+                                    {{-- アーティスト名 --}}
+                                    <p class="ml-4 font-semibold text-gray-900 dark:text-white">{{ $result_artist['name'] }}</p>
+                                </div>
                                 {{-- spotify_idを保存するフォーム --}}
                                 <form method="POST" action="{{ route('spotify.storeSpotifyId') }}">
                                     {{-- CSRF保護 --}}
@@ -72,7 +90,7 @@
                                     {{-- エラーを表示 --}}
                                     <x-input-error :messages="$errors->get('spotify_id')" class="" />
                                     {{-- 送信ボタン --}}
-                                    <x-primary-button class="shadow-md">リストに追加</x-primary-button>
+                                    <x-primary-button class="ml-4 min-w-32 min-h-11 flex justify-center shadow-md">リストに追加</x-primary-button>
                                 </form>
                             </div>
                         </a>
@@ -89,15 +107,33 @@
                     @foreach ($spotify_artists as $spotify_artist)
                         <a href="{{ $spotify_artist['external_urls']['spotify'] }}" class="cursor-pointer mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex motion-safe:hover:scale-[1.01] transition-all duration-250">
                             <div class="flex w-full items-center justify-between">
-                                {{-- アーティスト名 --}}
-                                <p class="font-semibold text-gray-900 dark:text-white">{{ $spotify_artist['name'] }}</p>
+                                {{-- アーティスト情報全体 --}}
+                                <div class="flex items-center justify-start">
+                                    {{-- アーティスト画像 --}}
+                                    @isset($spotify_artist['images']['0']['url'])
+                                        <img
+                                            src="{{ $spotify_artist['images']['0']['url'] }}"
+                                            alt="{{ $spotify_artist['name'] }}のアーティスト画像"
+                                            class="w-20 h-20 rounded-full shadow-md"
+                                        >
+                                    @else
+                                        <div class="w-20 h-20 flex justify-center items-center bg-gray-600 rounded-full shadow-md">
+                                            {{-- Googleマテリアルアイコン --}}
+                                            <span class="material-symbols-outlined text-3xl text-white rounded-full">
+                                                person
+                                            </span>
+                                        </div>
+                                    @endisset
+                                    {{-- アーティスト名 --}}
+                                    <p class="ml-4 font-semibold text-gray-900 dark:text-white">{{ $spotify_artist['name'] }}</p>
+                                </div>
                                 {{-- 削除 --}}
                                 <form method="POST" action="{{ route('spotify.detach', $spotify_artist['id']) }}">
                                     @csrf
                                     @method('delete')
                                     <x-primary-button
                                         type="submit"
-                                        class="bg-red-500 shadow-md"
+                                        class="ml-4 min-w-16 flex justify-center bg-red-500 shadow-md"
                                         onclick="return confirm('本当に削除しますか？')"
                                     >削除</x-primary-button>
                                 </form>
@@ -138,7 +174,7 @@
                             <x-input-error :messages="$errors->get('name')" class="" />
                         </div>
                         {{-- 送信ボタン --}}
-                        <x-primary-button class="ml-2 shadow-md">リストに追加</x-primary-button>
+                        <x-primary-button class="ml-2 max-h-10 shadow-md">リストに追加</x-primary-button>
                     </div>
                 </form>
                 <p class="mt-2 text-xs text-gray-900 dark:text-white">※<strong>リストに追加</strong>ボタンをクリックするとすぐに追加されます。</p>
@@ -152,7 +188,18 @@
                     @foreach ($artists as $artist)
                         <div class="mt-4 w-full scale-100 bg-white p-6 dark:bg-gray-800/50 dark:bg-gradient-to-bl from-gray-700/50 via-transparent dark:ring-1 dark:ring-inset dark:ring-white/5 rounded-lg shadow-md dark:shadow-none flex">
                             <div class="flex w-full items-center justify-between">
-                                <p class="font-semibold text-gray-900 dark:text-white">{{ $artist->name }}</p>
+                                {{-- アーティスト情報全体 --}}
+                                <div class="flex items-center">
+                                    {{-- アーティスト画像 --}}
+                                    <div class="min-w-20 w-20 h-20 flex justify-center items-center bg-gray-600 rounded-full shadow-md">
+                                        {{-- Googleマテリアルアイコン --}}
+                                        <span class="material-symbols-outlined text-3xl text-white rounded-full">
+                                            person
+                                        </span>
+                                    </div>
+                                    {{-- アーティスト名 --}}
+                                    <p class="ml-4 font-semibold text-gray-900 dark:text-white">{{ $artist->name }}</p>
+                                </div>
                                 {{-- もし削除権限がある場合に表示する --}}
                                 @if ($artist->users->contains(auth()->user()))
                                     <form method="POST" action="{{ route('artists.detach', $artist) }}">
@@ -160,7 +207,7 @@
                                         @method('delete')
                                         <x-primary-button
                                             type="submit"
-                                            class="bg-red-500 shadow-md"
+                                            class="ml-4 min-w-16 flex justify-center bg-red-500 shadow-md"
                                             onclick="return confirm('本当に削除しますか？')"
                                         >削除</x-primary-button>
                                     </form>
