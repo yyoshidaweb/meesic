@@ -5,24 +5,20 @@
         </h2>
     </x-slot>
     <div class="pb-8 flex flex-col items-center justify-center">
-        <div class="mt-8 w-96 flex flex-col items-center justify-center">
+        <div class="mt-4 w-96 flex flex-col items-center justify-center">
             {{-- ユーザー名 --}}
             <div class="">
-                <h2 class="mt-4 font-semibold text-2xl text-gray-900 dark:text-white">こんにちは！{{ $user_name }}</h2>
-                <p class="mt-4 text-gray-900 dark:text-white">
+                <p class="text-gray-900 dark:text-white">
                     ここではあなたのページに表示されるアーティストリストを編集できます。
                 </p>
             </div>
             {{-- Spotifyアーティスト --}}
-            <div class="mt-16">
-                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">好きなアーティストがSpotifyに登録されている場合はこちら</h2>
-                <div class="mt-4 p-4 bg-white rounded-3xl shadow-inner">
+            <div class="mt-4">
+                <div class="mt-4 p-4 bg-white rounded-lg shadow">
                     <h3 class="font-semibold text-xl text-gray-900 dark:text-white">アーティストの追加方法</h3>
                     <ol class="ml-5 list-decimal list-outside">
-                        <li class="mt-4 text-gray-900 dark:text-white">下の検索フォームに好きなアーティスト名を入力</li>
-                        <li class="mt-4 text-gray-900 dark:text-white"><strong>検索</strong>ボタンをクリック</li>
-                        <li class="mt-4 text-gray-900 dark:text-white">検索結果の中から好きなアーティストを探す</li>
-                        <li class="mt-4 text-gray-900 dark:text-white">好きなアーティストが見つかったら<strong>リストに追加</strong>ボタンをクリック！</li>
+                        <li class="mt-4 text-gray-900 dark:text-white">下の検索フォームで好きなアーティストを検索</li>
+                        <li class="mt-4 text-gray-900 dark:text-white">好きなアーティストが見つかったら<strong>追加</strong>ボタンをクリック！</li>
                     </ol>
                 </div>
             </div>
@@ -38,7 +34,7 @@
                             <input
                                 type="text"
                                 name="keyword"
-                                placeholder="アーティスト名で検索"
+                                placeholder="検索したいアーティスト名"
                                 value="{{ old('keyword') }}"
                                 class="w-72 rounded shadow-md"
                             />
@@ -90,7 +86,7 @@
                                     {{-- エラーを表示 --}}
                                     <x-input-error :messages="$errors->get('spotify_id')" class="" />
                                     {{-- 送信ボタン --}}
-                                    <x-primary-button class="ml-4 min-w-32 min-h-11 flex justify-center shadow-md">リストに追加</x-primary-button>
+                                    <x-primary-button class="ml-4 min-w-16 flex justify-center shadow-md">追加</x-primary-button>
                                 </form>
                             </div>
                         </a>
@@ -144,13 +140,12 @@
             @endisset
 
             {{-- カスタムアーティスト --}}
-            <div class="mt-32">
-                <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">好きなアーティストがSpotifyに登録されていない場合はこちら</h2>
-                <div class="mt-4 p-4 bg-white rounded-3xl shadow-inner">
-                    <h3 class="font-semibold text-xl text-gray-900 dark:text-white">アーティストの追加方法</h3>
+            <div class="mt-16">
+                <div class="p-4 bg-white rounded-lg shadow">
+                    <h3 class="font-semibold text-xl text-gray-900 dark:text-white">上の検索フォームで見つからない場合のアーティストの追加方法</h3>
                     <ol class="ml-5 list-decimal list-outside">
                         <li class="mt-4 text-gray-900 dark:text-white">下の入力フォームに好きなアーティスト名を入力</li>
-                        <li class="mt-4 text-gray-900 dark:text-white">あとは<strong>リストに追加</strong>ボタンをクリックするだけ！</li>
+                        <li class="mt-4 text-gray-900 dark:text-white"><strong>リストに追加</strong>ボタンをクリック！</li>
                     </ol>
                 </div>
             </div>
@@ -166,7 +161,7 @@
                             <input
                                 type="text"
                                 name="name"
-                                placeholder="アーティスト名を入力して追加"
+                                placeholder="追加したいアーティスト名"
                                 value="{{ old('name') }}"
                                 class="w-64 rounded shadow-md"
                             />
@@ -178,10 +173,11 @@
                     </div>
                 </form>
                 <p class="mt-2 text-xs text-gray-900 dark:text-white">※<strong>リストに追加</strong>ボタンをクリックするとすぐに追加されます。</p>
+                <p class="mt-2 text-xs text-gray-900 dark:text-white">※アーティスト名以外の情報は登録できません。</p>
             </div>
 
             {{-- カスタムアーティストが存在する場合 --}}
-            @isset($artists)
+            @if($artists->isNotEmpty())
                 {{-- カスタムアーティスト一覧を表示 --}}
                 <div class="mt-8 w-full">
                     <h3 class="text-xl font-semibold text-gray-900 dark:text-white">アーティストリスト（手動）</h3>
@@ -218,7 +214,7 @@
                     {{-- ページネーション --}}
                     <div class="paginate text-center">{{ $artists->links() }}</div>
                 </div>
-            @endisset
+            @endif
         </div>
     </div>
 </x-app-layout>
