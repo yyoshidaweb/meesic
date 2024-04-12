@@ -1,10 +1,10 @@
 <x-app-layout>
     {{-- アーティスト一覧の全体 --}}
-    <div class="pb-8 flex flex-col items-center justify-center">
-        <div class="mt-8 w-96 flex flex-col items-center justify-center font-semibold">
+    <div class="w-screen p-2 flex flex-col items-center justify-center">
+        <div class="mt-8 p-6 lg:w-1/3 flex flex-col items-center justify-center bg-white rounded-lg drop-shadow">
             {{-- ユーザー名 --}}
             <div class="">
-                <p class="text-4xl text-gray-900 dark:text-white">{{ $user_name }}</p>
+                <p class="text-4xl font-semibold text-gray-900 dark:text-white">{{ $user_name }}</p>
             </div>
             {{-- Spotify_artistsが存在する場合 --}}
             @isset($spotify_artists)
