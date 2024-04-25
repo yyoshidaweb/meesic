@@ -32,5 +32,5 @@
 MariaDB
 
 ## インフラ/その他専門技術
-- AWS Lightsail
+- Amazon Lightsail
 - Spotify Web API
