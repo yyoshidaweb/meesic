@@ -9,6 +9,11 @@
 
 これにより、ユーザーはアーティスト名の入力ミスや、予期せぬデータ編集による影響の心配もなく、安心して好きな音楽を共有できます。さらに、将来的にはユーザー同士の音楽の好みをマッチングする機能も搭載予定なので、ユーザーはもっと自分好みの音楽に出会えます。
 
+
+## デモ動画
+
+<img width="600" alt="Meesicでアーティストを登録しているGIF画像" src="https://github.com/user-attachments/assets/936ec8b5-54de-4ce4-a439-3b2905afdb39" />
+
 ## 実装機能一覧
 - ログイン機能
 - ゲストログイン機能
@@ -33,3 +38,6 @@ MariaDB
 ### インフラ/その他専門技術
 - Amazon Lightsail
 - Spotify Web API
+
+## 関連記事
+- [Qiita記事；【個人開発】好きな音楽を簡単に共有できるWebアプリ「Meesic」を紹介します！](https://qiita.com/yyoshidaweb/items/f4cb48df11fd94b0b928)
